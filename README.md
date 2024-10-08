@@ -50,21 +50,42 @@ Primeiro, executamos o comando dig www.elpais.com para obter a IP do dominio. No
 A continuación, observamos o TTL (Time to Live) no resultado, que indica o tempo en segundos que o rexistro quedará almacenado no DNS local antes de expirar. Por exemplo, se vemos algo como www.elpais.com. 300 IN A 192.168.1.1, que e o meu caso que me apareceu que o rexistro se almacenará durante 300 segundos (5 minutos) no DNS local.
 
 ### 8. Busca o TTL de distintos nomes de dominio de servicios que escollas, a qué se poden deber as diferencias?
-
+Vamos a elexir os dominios dos servicios de google amazon e facebook as diferencias que podemos ver ao lanzar o dig con estes servizos son : 
+Os servizos que necesitan actualizaciones frecuentes poden ter un TTL máis baixo, mentres que os servizos estables (como os de almacenamento ou información estática) poden ter un TTL máis alto.
+As empresas poden optar por diferentes políticas de caché en función da súa infraestrutura e necesidades de acceso.
+Un TTL máis baixo pode reducir a latencia, pero tamén aumentar a carga sobre os servidores DNS.
 
 ### 9. Determina o TTL máximo (original) dun nome de dominio.
+Para determinar o TTL máximo (orixinal) dun nome de dominio, segue estes pasos:
 
+    Elixe un dominio: Escolla un dominio como www.example.com.
+
+    Realiza a consulta: Executa o comando dig www.example.com.
+
+    Busca o TTL: Na ANSWER SECTION, atoparás o valor do TTL, que indica canto tempo se almacenará o rexistro no caché DNS.
+
+O TTL máximo varía, normalmente entre 3600 segundos (1 hora) e 86400 segundos (24 horas).
 
 ### 10. Averigua cántas máquinas con distintas IPs están detrás do dominio web www.google.es, sempre son as mesmas e na mesma orde? por qué?
 
-
+142.250.185.3 , 216.58.209.67 , 216.58.215.163 
+As IPs (142.250.185.3, 216.58.209.67, 216.58.215.163) probablemente non sexan sempre as mesmas nin aparecerán sempre na mesma orde. Isto débese ao balanceo de carga a resposta aleatoria e tamén pode ser a optimización.
 ### 11. Pregunta o mesmo a un server raiz (J.ROOTSERVERS.NET por exemplo) e comproba na resposta se o server acepta o modo recursivo
-
+Para preguntar a un servidor raíz como J.ROOTSERVERS.NET e comprobar se acepta o modo recursivo o que facemos é: 
+Primeiro, realiza a consulta ao servidor raíz usando o comando dig para preguntar por un dominio. Por exemplo, para consultar www.google.es ao servidor J.ROOTSERVERS.NET, executa o seguinte comando no terminal: dig www.google.es @J.ROOTSERVERS.NET. Despois, revisa a resposta que che devolve o comando e busca a sección que di flags. Finalmente, comproba se aparece a bandeira "ra" (Recursion Available), que indica se o servidor acepta consultas recursivas. Se non ves a bandeira ra, significa que o servidor non permite consultas recursivas, algo habitual nos servidores raíz, xa que estes normalmente só realizan consultas iterativas.
 
 ### 12. Se queremos ver tóda-las queries que fai o servidor de DNS, qué opción temos que usar? averigua a IP de www.timesonline.co.uk, especifica os pasos dados
 
+Para ver todas as consultas que fai o servidor DNS e averiguar a IP de www.timesonline.co.uk, usa o comando dig coa opción +trace, que mostra todo o camiño que segue a consulta a través dos servidores DNS. Primeiro, executa o seguinte comando no terminal: dig www.timesonline.co.uk +trace. Este comando mostrará todas as consultas que o servidor DNS realiza desde os servidores raíz ata os servidores autoritativos ata chegar á IP final. Ao final da saída, na ANSWER SECTION, verás a IP asociada a www.timesonline.co.uk, que será a resposta definitiva da consulta.
 
 ### 13. Usando a información dispoñible a traveso do DNS especifica a máquina (nome e IP) ou máquinas que actúan como servers de correo do dominio danielcastelao.org
-
+Debemos consultar os rexistros MX (Mail Exchange) a través do DNS. 
+Executa a consulta: dig danielcastelao.org MX
+Na ANSWER SECTION, atoparás os servidores de correo asociados ao dominio, xunto coa súa prioridade.
+Para obter as IPs dos servidores listados, executa o comando dig para cada nome de servidor. 
 
 ### 14. Podes obter os rexistros AAAA de www.facebook.com? a qué corresponden?
+Si que podes utilizando dig AAAA www.facebook.com.
+Os rexistros AAAA de www.facebook.com corresponden a enderezos IP en formato IPv6.
+
+
